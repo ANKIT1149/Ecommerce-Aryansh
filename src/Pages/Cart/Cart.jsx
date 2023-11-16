@@ -1,10 +1,17 @@
 // import React from 'react'
 
+import { useContext } from "react"
+import { Layout } from "../../components"
+import MyContext from "../../context/data/MyContext"
+
 const Cart = () => {
+    const {mode} = useContext(MyContext);
   return (
-    <div>
-      Cart
-    </div>
+    <Layout>
+      <div style={{color: mode === "dark" ? "white" : "black"}}>
+        Cart
+      </div>
+    </Layout>
   )
 }
 
