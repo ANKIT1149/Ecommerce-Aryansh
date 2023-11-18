@@ -174,7 +174,7 @@ const Navbar = () => {
                     {mode === 'light' ?
                       (<FiSun className='' size={30} />
                       ) : 'dark' ?
-                        (<BsFillCloudSunFill size={30} />
+                        (<BsFillCloudSunFill size={30} className=""/>
                         ) : ''}
                   </button>
                 </div>
