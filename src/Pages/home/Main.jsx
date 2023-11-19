@@ -1,11 +1,17 @@
 // import React from 'react'
 
-import { Layout } from "../../components"
+import { Filter, Footer, HeroSection, Layout, Productcard, Track } from "../../components"
+import Testimonial from "../../components/testinomials/Testinomial"
+
 
 const Home = () => {
   return (
     <Layout>
-      Home
+     <HeroSection />
+     <Filter />
+     <Productcard />
+     <Track />
+     <Testimonial />
     </Layout>
   )
 }
