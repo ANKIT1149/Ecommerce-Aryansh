@@ -2,7 +2,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './App.css'
 import { Addproduct, Cart, Dashboard, ErrorPage, Home, Login, Order, Productinfo, Signup, UpdateProduct } from './Pages'
 import MyState from './context/data/MyState'
-
+import { ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function App() {
 
 
@@ -21,6 +22,7 @@ function App() {
            <Route path='/updateproduct' element={<UpdateProduct />} />
            <Route path='/*' element={<ErrorPage />} />
          </Routes>
+         <ToastContainer />
       </Router>
     </MyState>
   )
