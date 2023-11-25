@@ -16,6 +16,14 @@ const Navbar = () => {
     const context = useContext(MyContext);
     const [open, setOpen] = useState(false)
     const {mode, toggleMode} = context
+
+    
+  const user = JSON.parse(localStorage.getItem('user'));
+
+  const logout = () => {
+      localStorage.clear('user');
+      window.location.href = "login";
+  }
   return (
     <div className="bg-white sticky top-0 z-50  " >
           <Transition.Root show={open} as={Fragment}>
@@ -65,16 +73,16 @@ const Navbar = () => {
                   </div>
 
                   <div className="flow-root">
-                    <Link to={'/dashboard'} className="-m-2 block p-2 font-medium text-gray-900" style={{ color: mode === 'dark' ? 'white' : '', }}>
+                   {user?.user?.email === "ankitsrivastav34@gmail.com" ?  <Link to={'/dashboard'} className="-m-2 block p-2 font-medium text-gray-900" style={{ color: mode === 'dark' ? 'white' : '', }}>
                       admin
-                    </Link>
+                    </Link> : ""}
                   </div>
 
-                  <div className="flow-root">
-                    <a className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer" style={{ color: mode === 'dark' ? 'white' : '', }}>
+                   {user ?  
+                  <div className="flow-root"><a onClick={logout}  className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer" style={{ color: mode === 'dark' ? 'white' : '', }}>
                       Logout
-                    </a>
-                  </div>
+                    </a>   </div>: ''}
+                
                   <div className="flow-root">
                     <Link to={'/'} className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer">
                       <img
@@ -139,13 +147,18 @@ const Navbar = () => {
                   <Link to={'/order'} className="text-sm font-medium text-gray-700 " style={{ color: mode === 'dark' ? 'white' : '', }}>
                     Order
                   </Link>
-                  <Link to={'/dashboard'} className="text-sm font-medium text-gray-700 " style={{ color: mode === 'dark' ? 'white' : '', }}>
-                    Admin
-                  </Link>
+                  {user?.user?.email === 'knupadhyay784@gmail.com' ? <div className="flow-root">
+                    <Link to={'/dashboard'} className="-m-2 block p-2 font-medium text-gray-900" style={{ color: mode === 'dark' ? 'white' : '', }}>
+                      admin
+                    </Link>
+                  </div> : ""}
 
-                  <a className="text-sm font-medium text-gray-700 cursor-pointer  " style={{ color: mode === 'dark' ? 'white' : '', }}>
-                    Logout
-                  </a>
+                  {user ? <div className="flow-root">
+                    <a onClick={logout} className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer" style={{ color: mode === 'dark' ? 'white' : '', }}>
+                      Logout
+                    </a>
+                  </div> 
+: ""}
                 </div>
 
                 <div className="hidden lg:ml-8 lg:flex">
@@ -174,7 +187,7 @@ const Navbar = () => {
                     {mode === 'light' ?
                       (<FiSun className='' size={30} />
                       ) : 'dark' ?
-                        (<BsFillCloudSunFill size={30} />
+                        (<BsFillCloudSunFill size={30} className=""/>
                         ) : ''}
                   </button>
                 </div>
