@@ -1,9 +1,42 @@
-import { Link } from 'react-router-dom'
+import { useContext, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import MyContext from '../../context/data/MyContext'
+import Loader from '../../components/Loader/Loader';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../FireBase/FireBaseconfig';
+import { toast } from 'react-toastify';
 
 function Login() {
-   
+   const {loading, isLoading} = useContext(MyContext);
+   const [email, setEmail] = useState('');
+   const [password, setPassword] = useState('');
+   const navigate = useNavigate()
+
+const signIn = async () => {
+    isLoading(true)
+     try {
+        const result = await signInWithEmailAndPassword(auth, email, password);
+        localStorage.setItem("user", JSON.stringify(result));
+        toast.success('Signin Successfully', {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        navigate("/")
+     } catch (error) {
+        console.log(error);
+        toast.error('Signin failed')
+        isLoading(false)
+     }
+}
     return (
         <div className=' flex justify-center items-center h-screen'>
+            {loading && <Loader />}
             <div className=' bg-gray-800 px-10 py-10 rounded-xl '>
                 <div className="">
                     <h1 className='text-center text-white text-xl mb-4 font-bold'>Login</h1>
@@ -11,12 +44,16 @@ function Login() {
                 <div>
                     <input type="email"
                         name='email'
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         className=' bg-gray-600 mb-4 px-2 py-2 w-full lg:w-[20em] rounded-lg text-white placeholder:text-gray-200 outline-none'
                         placeholder='Email'
                     />
                 </div>
                 <div>
                     <input
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                         type="password"
                         className=' bg-gray-600 mb-4 px-2 py-2 w-full lg:w-[20em] rounded-lg text-white placeholder:text-gray-200 outline-none'
                         placeholder='Password'
@@ -24,6 +61,7 @@ function Login() {
                 </div>
                 <div className=' flex justify-center mb-3'>
                     <button
+                    onClick={signIn}
                         className=' bg-yellow-500 w-full text-black font-bold  px-2 py-2 rounded-lg'>
                         Login
                     </button>
